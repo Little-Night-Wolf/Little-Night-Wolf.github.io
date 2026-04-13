@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Little-Night-Wolf | Project Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #818cf8;
+            --secondary: #c084fc;
+            --bg: #020617;
+            --card-bg: rgba(15, 23, 42, 0.6);
+            --text-main: #f1f5f9;
+            --text-dim: #94a3b8;
+            --accent: #22d3ee;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            background-image: 
+                fixed; /* Evita que el fondo se mueva */
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(192, 132, 252, 0.15) 0px, transparent 50%);
+            color: var(--text-main);
+            min-height: 100vh;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+
+        /* Estilo para el Proyecto Destacado (About Me) */
+        .featured-section {
+            margin-bottom: 60px;
+            perspective: 1000px;
+        }
+
+        .pinned-card {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(168, 85, 247, 0.2));
+            border: 2px solid var(--primary);
+            border-radius: 30px;
+            padding: 40px;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 0 50px rgba(99, 102, 241, 0.2);
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.3s ease;
+        }
+
+        .pinned-card:hover { transform: scale(1.02); }
+
+        .pinned-icon {
+            font-size: 4rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Grid de Webs */
+        .web-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .web-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .web-card::before {
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            opacity: 0; transition: 0.3s;
+        }
+
+        .web-card:hover {
+            background: rgba(30, 41, 59, 0.8);
+            transform: translateY(-5px);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .web-card:hover::before { opacity: 1; }
+
+        .web-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 10px; color: var(--accent); }
+        .web-desc { font-size: 0.9rem; color: var(--text-dim); margin-bottom: 20px; line-height: 1.5; }
+
+        .badge {
+            display: inline-flex; align-items: center; gap: 5px;
+            background: rgba(34, 211, 238, 0.1);
+            color: var(--accent); padding: 5px 12px; border-radius: 20px; font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* Loader */
+        #loader {
+            position: fixed; inset: 0; background: var(--bg);
+            display: flex; align-items: center; justify-content: center; z-index: 100;
+        }
+
+        h2 { margin-bottom: 30px; font-weight: 800; letter-spacing: -1px; }
+    </style>
+</head>
+<body>
+
+    <div id="loader"><i class="fas fa-compass fa-spin fa-3x" style="color:var(--primary)"></i></div>
+
+    <div class="container">
+        <header style="margin-bottom: 50px;">
+            <h1 style="font-size: 2.5rem; font-weight: 800;">My Digital <span style="color:var(--primary)">Universe</span></h1>
+            <p style="color:var(--text-dim)">Explora mis proyectos activos y despliegues en vivo.</p>
+        </header>
+
+        <h2>Destacado</h2>
+        <div class="featured-section">
+            <a href="https://Little-Night-Wolf.github.io/Little-Night-Wolf/" class="pinned-card" id="pinned-link">
+                <div class="pinned-icon"><i class="fas fa-user-rocket"></i></div>
+                <div>
+                    <h3 style="font-size: 1.5rem; margin-bottom: 5px;">About Me & Portfolio</h3>
+                    <p style="color: var(--text-dim);">Mi perfil profesional, habilidades y biografía completa detallada.</p>
+                    <div style="margin-top: 15px; font-size: 0.8rem; font-weight: bold; color: var(--primary);">
+                        VISITAR PERFIL <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <h2>Websites & Demos</h2>
+        <div id="web-container" class="web-grid">
+            </div>
+    </div>
+
+    <script>
+        const USER = 'Little-Night-Wolf';
+        const SPECIAL_REPO = 'Little-Night-Wolf'; // Tu repositorio especial
+
+        async function fetchWebProjects() {
+            try {
+                // Obtenemos todos los repositorios
+                const response = await fetch(`https://api.github.com/users/${USER}/repos?sort=updated&per_page=100`);
+                const repos = await response.json();
+
+                const container = document.getElementById('web-container');
+                
+                // Filtramos: 
+                // 1. Que tengan 'has_pages' en true
+                // 2. Que NO sean el repo especial (porque ya está pineado arriba)
+                // 3. Que NO sea el repo raíz (el que contiene este código)
+                const webRepos = repos.filter(repo => 
+                    repo.has_pages && 
+                    repo.name.toLowerCase() !== SPECIAL_REPO.toLowerCase() &&
+                    repo.name.toLowerCase() !== `${USER}.github.io`.toLowerCase()
+                );
+
+                webRepos.forEach(repo => {
+                    const card = document.createElement('a');
+                    card.className = 'web-card';
+                    // La URL de GitHub Pages suele ser username.github.io/repo-name
+                    card.href = `https://${USER}.github.io/${repo.name}/`;
+                    card.target = '_blank';
+
+                    card.innerHTML = `
+                        <div>
+                            <div class="web-title">${repo.name.replace(/-/g, ' ')}</div>
+                            <p class="web-desc">${repo.description || "Proyecto web desplegado en GitHub Pages."}</p>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <span class="badge"><i class="fas fa-external-link-alt"></i> Live Demo</span>
+                            <span style="font-size:0.7rem; color:var(--text-dim)">
+                                <i class="far fa-star"></i> ${repo.stargazers_count}
+                            </span>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+
+                document.getElementById('loader').style.display = 'none';
+
+            } catch (error) {
+                console.error("Error cargando repos:", error);
+                document.getElementById('loader').innerHTML = "No se pudieron cargar los proyectos.";
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', fetchWebProjects);
+    </script>
+</body>
+</html>
